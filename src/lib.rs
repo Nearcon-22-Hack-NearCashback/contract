@@ -57,8 +57,11 @@ impl Contract {
         cashback_id
     }
 
-    pub fn claim(&self, id: CashbackId, signature: Vec<u8>) {
-        let cashback = self.active_cashbacks.get(&id).expect("No active cashback");
+    pub fn claim(&mut self, id: CashbackId, signature: Vec<u8>) {
+        let cashback = self
+            .active_cashbacks
+            .remove(&id)
+            .expect("No active cashback");
 
         let signature = ed25519_dalek::Signature::try_from(signature.as_ref())
             .expect("Signature should be a valid array of 64 bytes [13, 254, 123, ...]");
