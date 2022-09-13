@@ -63,7 +63,9 @@ impl Contract {
         let signature = ed25519_dalek::Signature::try_from(signature.as_ref())
             .expect("Signature should be a valid array of 64 bytes [13, 254, 123, ...]");
 
-        let public_key = ed25519_dalek::PublicKey::from_bytes(cashback.pub_key.as_bytes()).unwrap();
+        // first byte contains CurveType, so we're removing it
+        let public_key =
+            ed25519_dalek::PublicKey::from_bytes(&cashback.pub_key.as_bytes()[1..]).unwrap();
 
         let verification_result = public_key.verify(&id.to_be_bytes(), &signature);
 
