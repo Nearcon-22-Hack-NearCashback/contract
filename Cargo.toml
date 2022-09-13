@@ -8,6 +8,7 @@ version = "0.1.0"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
+ed25519-dalek = "1.0.1"
 near-sdk = "4.0.0"
 
 [profile.release]
